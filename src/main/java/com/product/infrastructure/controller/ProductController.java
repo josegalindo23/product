@@ -4,11 +4,9 @@ import com.product.domain.model.Product;
 import com.product.infrastructure.gateway.GetProductInterface;
 import com.product.infrastructure.gateway.SaveProductInterface;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,16 @@ public class ProductController {
         List<Product> body = getProduct.getAllProducts();
         return new ResponseEntity<>(body,OK);
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductByID(@PathVariable Long id) {
+        try {
+            Product product = getProduct.getProduct(id);
+            return new ResponseEntity<>(product, OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

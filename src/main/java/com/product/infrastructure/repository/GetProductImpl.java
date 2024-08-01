@@ -20,7 +20,9 @@ public class GetProductImpl implements GetProductRepository {
 
     @Override
     public Product getProduct(Long idProduct) {
-        return productJpa.findById(idProduct).get().toModel();
+        return productJpa.findById(idProduct)
+                .map(ProductEntity::toModel)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     @Override
