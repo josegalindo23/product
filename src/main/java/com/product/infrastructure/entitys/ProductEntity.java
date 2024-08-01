@@ -28,6 +28,7 @@ public class ProductEntity {
 
     public Product toModel(){
         return Product.builder()
+                .id(this.id)
                 .name(this.name)
                 .price(this.price)
                 .description(this.description)
@@ -39,6 +40,7 @@ public class ProductEntity {
 
     public static ProductEntity fromModel(Product product){
         return ProductEntity.builder()
+                .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
                 .description(product.getDescription())

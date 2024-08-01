@@ -2,10 +2,10 @@ package com.product.infrastructure.repository;
 
 import com.product.domain.model.Product;
 import com.product.domain.repository.UpdateProductRepository;
+import com.product.infrastructure.entitys.ProductEntity;
 import com.product.infrastructure.jpa.ProductJpa;
 import org.springframework.stereotype.Repository;
 
-import static com.product.infrastructure.entitys.ProductEntity.fromModel;
 
 @Repository
 public class UpdateProductImpl implements UpdateProductRepository {
@@ -18,6 +18,14 @@ public class UpdateProductImpl implements UpdateProductRepository {
 
     @Override
     public Product updateProduct(Product product) {
-        return productJpa.save(fromModel(product)).toModel();
+        ProductEntity existingProduct = productJpa.findById(product.getId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        existingProduct.setName(product.getName());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setActive(product.getIsActive());
+        existingProduct.setIva(product.getIva());
+        return productJpa.save(existingProduct).toModel();
     }
 }

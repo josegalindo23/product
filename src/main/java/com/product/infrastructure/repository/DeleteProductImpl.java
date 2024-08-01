@@ -1,6 +1,7 @@
 package com.product.infrastructure.repository;
 
 import com.product.domain.repository.DeleteProductRepository;
+import com.product.infrastructure.entitys.ProductEntity;
 import com.product.infrastructure.jpa.ProductJpa;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,8 @@ public class DeleteProductImpl implements DeleteProductRepository {
 
     @Override
     public void deleteProduct(Long idProduct) {
-        productJpa.deleteById(idProduct);
+        ProductEntity product = productJpa.findById(idProduct)
+                .orElseThrow(()-> new RuntimeException("Product not found"));
+        productJpa.delete(product);
     }
 }
