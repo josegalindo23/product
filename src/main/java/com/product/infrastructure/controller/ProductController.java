@@ -23,20 +23,21 @@ public class ProductController {
     private final UpdateProductInterface updateProduct;
     private final DeleteProductInterface deleteProduct;
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping()
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         Product body = saveProduct.saveProduct(product);
         return new ResponseEntity<>(body,OK);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping()
     public ResponseEntity<List<Product>> getAllProduct() {
         List<Product> body = getProduct.getAllProducts();
         return new ResponseEntity<>(body,OK);
 
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductByID(@PathVariable Long id) {
         try {
@@ -47,7 +48,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping()
     public ResponseEntity<Product> updateProduct(@RequestBody Product product){
 
@@ -59,7 +60,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
         try{
